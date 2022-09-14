@@ -52,7 +52,9 @@ contains normalized files -> sales_diesel.parquet | sales_oil_derivative_fuels.p
 ###### Next steps
 [ ] Modularize the code
 
-[ ] update code to use variables
+[ ] Update code to use variables
 
-[ ] implement tests
+[ ] Implement tests
+
+[ ] Add documentation
 
