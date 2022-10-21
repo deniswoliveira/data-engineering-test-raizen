@@ -20,8 +20,7 @@ COPY --chown=raizen:raizen . .
 RUN python ./src/generate_anp_fuel_sales.py
 
 WORKDIR /opt/app/tests
-RUN python -m pytest --doctest-modules \
-    --junitxml=xunit-reports/xunit-result-all.xml 
+RUN python -m pytest --doctest-modules --junitxml=/opt/xunit-reports/xunit-result-all.xml
 
 WORKDIR /opt/trusted_data
 ENTRYPOINT [ "/bin/bash"]

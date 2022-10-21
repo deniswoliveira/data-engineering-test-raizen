@@ -1,9 +1,14 @@
+import glob
+
 import pandas as pd
-import pytest
+
+path = "/opt/trusted_data/sales_diesel/*/*.parquet"
 
 
 def read_data(path):
-    return pd.read_parquet(path)
+    files = glob.glob(path)
+    data = [pd.read_parquet(f) for f in files]
+    return pd.concat(data, ignore_index=True)
 
 
 def sum_jan2013_sales_diesel(path):
@@ -30,16 +35,16 @@ def sum_sales_diesel(path):
 
 
 def test_sum_jan2013_sales_diesel():
-    assert sum_jan2013_sales_diesel("/opt/trusted_data/sales_diesel.parquet") == 4456692
+    assert sum_jan2013_sales_diesel(path) == 4456692
 
 
 def test_sum_jun2017_sales_diesel():
-    assert sum_jun2017_sales_diesel("/opt/trusted_data/sales_diesel.parquet") == 4677453
+    assert sum_jun2017_sales_diesel(path) == 4677453
 
 
 def test_sum_ago2019_sales_diesel():
-    assert sum_ago2019_sales_diesel("/opt/trusted_data/sales_diesel.parquet") == 5284080
+    assert sum_ago2019_sales_diesel(path) == 5284080
 
 
 def test_sum_sales_diesel():
-    assert sum_sales_diesel("/opt/trusted_data/sales_diesel.parquet") == 440145528
+    assert sum_sales_diesel(path) == 440145528

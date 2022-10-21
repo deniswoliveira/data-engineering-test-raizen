@@ -1,9 +1,14 @@
+import glob
+
 import pandas as pd
-import pytest
+
+path = "/opt/trusted_data/sales_oil_derivative_fuels/*/*.parquet"
 
 
 def read_data(path):
-    return pd.read_parquet(path)
+    files = glob.glob(path)
+    data = [pd.read_parquet(f) for f in files]
+    return pd.concat(data, ignore_index=True)
 
 
 def sum_jan2000_sales_oil_derivative_fuels(path):
@@ -30,34 +35,16 @@ def sum_sales_oil_derivative_fuels(path):
 
 
 def test_sum_jan2000_sales_oil_derivative_fuels():
-    assert (
-        sum_jan2000_sales_oil_derivative_fuels(
-            "/opt/trusted_data/sales_oil_derivative_fuels.parquet"
-        )
-        == 6995110
-    )
+    assert sum_jan2000_sales_oil_derivative_fuels(path) == 6995110
 
 
 def test_sum_jun2011_sales_oil_derivative_fuels():
-    assert (
-        sum_jun2011_sales_oil_derivative_fuels(
-            "/opt/trusted_data/sales_oil_derivative_fuels.parquet"
-        )
-        == 10184502
-    )
+    assert sum_jun2011_sales_oil_derivative_fuels(path) == 10184502
 
 
 def test_sum_ago2013_sales_oil_derivative_fuels():
-    assert (
-        sum_ago2013_sales_oil_derivative_fuels(
-            "/opt/trusted_data/sales_oil_derivative_fuels.parquet"
-        )
-        == 12082456
-    )
+    assert sum_ago2013_sales_oil_derivative_fuels(path) == 12082456
 
 
 def test_sum_sales_oil_derivative_fuels():
-    assert (
-        sum_sales_oil_derivative_fuels("/opt/trusted_data/sales_oil_derivative_fuels.parquet")
-        == 2369227066
-    )
+    assert sum_sales_oil_derivative_fuels(path) == 2369227066
